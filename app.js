@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const db = require('./db');
 
 const prefix = '!';
 const secret = require('./secret.json');
@@ -30,6 +31,9 @@ client.on('message', async message => {
             break;
         case 'aether':
             message.channel.send('Aether scheduling will be implemented shortly :)');
+            // FirstName LastName TwitchName Request
+            //let [firstName, lastName, twitchName, request]
+
             //TODO: Implement aetherQueue() logic, adding character information and requested content assistance to FirebaseDB
             break;
         case 'primal':
