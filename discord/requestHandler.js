@@ -4,8 +4,7 @@ import globals from '../globals';
 // Add to the Queue, check DC Cache, !found > Add to Cache & DB, found > return current request. Provide User Feedback.
 
 const aetherQueue = async (message, args) => {
-	let aetherCache = globals.aetherCache; // Production Cache
-	//let aetherCache = globals.testAetherCache; // Dev Cache Object, pre-populated
+	let aetherCache = globals.aetherCache;
 	
 	let response = '';
 	let storeCache = false;
@@ -51,8 +50,7 @@ const aetherQueue = async (message, args) => {
 };
 
 const primalQueue = async (message, args) => {
-	let primalCache = globals.primalCache; // Production Cache
-	//let primalCache = globals.testPrimalCache; // Dev Cache Object, pre-populated
+	let primalCache = globals.primalCache;
 	
 	let response = '';
 	let storeCache = false;
@@ -98,8 +96,7 @@ const primalQueue = async (message, args) => {
 };
 
 const storeAetherCache = async (request) => {
-	let aetherCache = globals.aetherCache; // Production Cache
-	//let aetherCache = globals.testAetherCache; // Dev Cache Object, pre-populated
+	let aetherCache = globals.aetherCache;
 	console.log(aetherCache);
 	aetherCache[request.twitch] = request;
 	console.log(aetherCache[request.twitch]);
@@ -107,8 +104,7 @@ const storeAetherCache = async (request) => {
 };
 
 const storePrimalCache = async (request) => {
-	let primalCache = globals.primalCache; // Production Cache
-	//let primalCache = globals.testPrimalCache; // Dev Cache Object, pre-populated
+	let primalCache = globals.primalCache;
 	primalCache[request.twitch] = request;
 	return true;
 };
