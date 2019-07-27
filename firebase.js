@@ -29,7 +29,7 @@ const connect = async () => {
 		});
 	});
 
-	globals.store = store;
+	globals.db = store;
 	globals.aetherCache = aetherCache;
 	globals.primalCache = primalCache;
 

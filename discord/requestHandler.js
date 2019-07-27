@@ -4,16 +4,21 @@ import globals from '../globals';
 // Add to the Queue, check DC Cache, !found > Add to Cache & DB, found > return current request. Provide User Feedback.
 
 const aetherQueue = async (message, args) => {
+	if (args.length < 5) {
+		return "Invalid request, please provide all required information";
+	}
+	
 	let aetherCache = globals.aetherCache;
 	
 	let response = '';
 	let storeCache = false;
 	let storeDB = false;
 
-	let [firstName, lastName, twitchName, content] = args;
+	let [firstName, lastName, role, twitchName, content] = args;
 	let requestObj = {
 		"firstName": firstName,
 		"lastName": lastName,
+		"role": role,
 		"twitch": twitchName,
 		"request": content,
 		"timestamp": new Date(Date.now())
@@ -37,7 +42,7 @@ const aetherQueue = async (message, args) => {
 		
 		if(storeCache && storeDB) {
 			console.log('Added to Aether Requests');
-			response = `${twitchName} successfully request ${content} for Character ${firstName} ${lastName} on Aether`;
+			response = `${twitchName} successfully request ${content} for Character ${firstName} ${lastName} as ${role} on Aether`;
 		}
 	}
 	else{
@@ -50,16 +55,21 @@ const aetherQueue = async (message, args) => {
 };
 
 const primalQueue = async (message, args) => {
+	if (args.length < 5) {
+		return "Invalid request, please provide all required information";
+	}
+	
 	let primalCache = globals.primalCache;
 	
 	let response = '';
 	let storeCache = false;
 	let storeDB = false;
 
-	let [firstName, lastName, twitchName, content] = args;
+	let [firstName, lastName, role, twitchName, content] = args;
 	let requestObj = {
 		"firstName": firstName,
 		"lastName": lastName,
+		"role": role,
 		"twitch": twitchName,
 		"request": content,
 		"timestamp": new Date(Date.now())
@@ -83,7 +93,7 @@ const primalQueue = async (message, args) => {
 		
 		if(storeCache && storeDB) {
 			console.log('Added to Primal Requests');
-			response = `${twitchName} successfully requested ${content} for Character ${firstName} ${lastName} on Primal`;
+			response = `${twitchName} successfully requested ${content} for Character ${firstName} ${lastName} as ${role} on Primal`;
 		}
 	}
 	else{
@@ -148,8 +158,9 @@ const getPrimalRequests = async () => {
 const removeAetherRequest = async (twitch) => {
 	let response = '';
 	
-	let store = globals.db;
-	let deletedRequest = await store.collection('aether').doc(`${twitch}`).delete();
+	let db = globals.db;
+	let collection = db.collection('aether');
+	let deletedRequest = await collection.doc(`${twitch}`).delete();
 	if(!deletedRequest){
 		console.log(`Error deleting request from Aether Firestore Collection: ${err}`);
 		response = `Failed to remove ${twitch}'s request`;
@@ -163,8 +174,9 @@ const removeAetherRequest = async (twitch) => {
 const removePrimalRequest = async (twitch) => {
 	let response = '';
 	
-	let store = globals.db;
-	let deletedRequest = await store.collection('primal').doc(`${twitch}`).delete();
+	let db = globals.db;
+	let collection = db.collection('primal');
+	let deletedRequest = await collection.doc(`${twitch}`).delete();
 	if(!deletedRequest){
 		console.log(`Error deleting request from Primal Firestore Collection: ${err}`);
 		response = `Failed to remove ${twitch}'s request`;
